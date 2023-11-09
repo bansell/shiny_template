@@ -9,6 +9,9 @@
 # User-specific files
 .Ruserdata
 
+# User folders
+#pswd_local/
+
 # Example code in package build process
 *-Ex.R
 
