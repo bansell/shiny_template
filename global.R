@@ -10,6 +10,9 @@
 library(tidyverse); library(readxl); library(janitor)
 library(glue);      library(scales); library(here) 
 
+library(plotly)
+library(gt)
+
 if(!require(tidyExt)){
   devtools::install_github('bansell/tidyExt'); 
 library(tidyExt)}

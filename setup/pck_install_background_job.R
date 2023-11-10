@@ -6,6 +6,8 @@ install.packages('shiny')
 install.packages('shinyauthr')
 install.packages('sodium')
 install.packages('devtools')
+install.packages('plotly')
+install.packages('gt')
 
 
 # optional ------------------------------------------------------------------
