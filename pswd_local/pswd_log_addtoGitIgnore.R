@@ -14,7 +14,7 @@ library(tidyverse)
 library(sodium) 
 
 #NB on linux, sodium requires manual installation of libsodium; 
-# cf ~/Dropbox/Bahlo_Lab/shinyApps/shinyauthr/install_libsodium_for_shinyauthr.sh 
+# cf notes/install_libsodium_for_shinyauthr.sh 
 
 
 # set uid & pwd ------------------------------------------------
