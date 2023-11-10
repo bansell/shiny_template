@@ -62,16 +62,28 @@ server <- function(input, output, session) {
                      choiceValues = c('class','manufacturer'))
         )
 
+
+# sidebar2 ----------------------------------------------------------------
+
+
       , conditionalPanel(condition='input.tabset==2'
                          ,h3('Some text here for you')
                          ,br()
                          ,h5('Scroll over chart to reveal reciprocal data subsets'))
+
+
+# sidebar3 ----------------------------------------------------------------
+
 
     , conditionalPanel(condition='input.tabset==3',
                        h5('ggplot reactive on plotly hover'))
 ),
         
       
+
+# mainPanel code ----------------------------------------------------------
+
+  
   mainPanel(
     tabsetPanel(#type='tabs',
     
@@ -82,7 +94,16 @@ server <- function(input, output, session) {
       tabPanel('MPG scatter', value=1,
                width=9,
                br(),br(),
-               plotOutput('plot1',width="800",height="500")),
+               withSpinner( #loading wheel
+                 plotOutput('plot1',width="700",height="400"),
+                 type = getOption("spinner.type", default = 6),
+                 #color.background = getOption("white"),
+                 #color = getOption("spinner.color", default = "#0275D8"),
+                 color = getOption("spinner.color", default = 'dodgerblue'),
+                 size = getOption("spinner.size", default = 1.75),
+                 ),
+               br(),
+               gt_output('gt_tbl')),
 
       # tab2 --------------------------------------------------------------------
 
@@ -91,13 +112,13 @@ server <- function(input, output, session) {
              br(),br(),
              plotlyOutput("subplot", width="1100",height="600")),
 
-# tab 3 -------------------------------------------------------------------
+    # tab 3 -------------------------------------------------------------------
 
       tabPanel('plotly ~ ggplot react', value=3,
                width=9,
                br(),br(),
-               plotlyOutput('plotlybar',width='500',height="300"),
-               plotOutput('jitterbox',width="200",height="300"),
+               plotlyOutput('plotlybar',width='500',height="250"),
+               plotOutput('jitterbox',width="200",height="250"),
                br(),
                textOutput('plotlybar_txt')
       )
@@ -106,7 +127,7 @@ server <- function(input, output, session) {
     
       
 
-# code for plots and tables -----------------------------------------------
+# PLOT & TABLE code -----------------------------------------------
 
   
 
@@ -129,6 +150,7 @@ server <- function(input, output, session) {
   
       output$plot1 <- renderPlot({
         
+        Sys.sleep(1.5) # to trigger the loading wheel as demo
         
         mpg_sub1() %>% 
           ggplot(aes(x=cty,y=hwy)) + 
@@ -138,6 +160,39 @@ server <- function(input, output, session) {
     })
   
 
+
+# gt table ----------------------------------------------------------------
+
+
+  tbl_dat <- reactive({
+    
+    if(!is.null(input$manufacturer)){
+    mpg %>% filter(manufacturer==input$manufacturer)
+      }else{mpg}
+    
+    })
+  
+  
+  output$gt_tbl <- render_gt({
+    
+    tbl_dat() %>% 
+      gt() %>% 
+      opt_interactive(use_search = TRUE,
+                      use_filters = TRUE,
+                      use_resizers = TRUE,
+                      use_highlight = TRUE,
+                      use_compact_mode = FALSE,
+                      use_text_wrapping = FALSE,
+                      use_page_size_select = TRUE)  %>%
+      tab_style(
+        style = cell_text(size = "11px"),
+        locations = list(cells_body())) %>%
+      tab_options( #ihtml.page_size_default = ifelse(nrow(pdat)>50, 50, nrow(pdat))
+        ihtml.page_size_default = 50)
+    
+  })
+  
+  
 # plot group 2 subplot -----------------------------------------------------------------
 
   output$subplot <- renderPlotly({
@@ -220,9 +275,12 @@ output$plotlybar <- renderPlotly({
         ggplot(aes(x=class,y=cty), colour=default_grey) + 
         geom_boxplot() +
         geom_jitter(width=0.2) + 
-        ggtitle(myclass) + theme_minimal() + no_legend()  +
+        #ggtitle(myclass) + 
+        theme_minimal() + 
+        theme(text=element_text(size=16)) +
+        tidyExt::no_legend()  +
         #expand_limits(y = 0) 
-        ylim(0, max(mpg$cty))
+        ylim(0, max(mpg$cty)) 
       
       
     )

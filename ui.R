@@ -38,7 +38,7 @@ theme = custom_theme3,
   shinyauthr::loginUI(id = "login",
                       title="Please log in please",
                       user_title = "Your user name (try 'u')",
-                      pass_title = "Pay the troll toll! (try 'p')"),
+                      pass_title = "Password! (try 'p')"),
   
   
   div(shinyauthr::logoutUI(id = "logout",
