@@ -1,3 +1,3 @@
 # shiny_template
 
-code for authentication; reactivity and title images
+code for authentication; reactivity, loading wheels & title images
