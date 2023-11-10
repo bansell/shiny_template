@@ -103,6 +103,7 @@ server <- function(input, output, session) {
                  size = getOption("spinner.size", default = 1.75),
                  ),
                br(),
+               h5('Table - reactively updates based on sidebar selection:'),
                gt_output('gt_tbl')),
 
       # tab2 --------------------------------------------------------------------
@@ -225,7 +226,8 @@ output$plotlybar <- renderPlotly({
   
   pltly_plt <- mpg %>% 
     ggplot(aes(x=class)) + 
-    geom_bar(aes(fill=class, text=class)) + tidyExt::no_legend()
+    geom_bar(aes(fill=class, text=class)) + 
+    theme(legend.position = "none")
   
   ggplotly(pltly_plt, tooltip=c('text'), source='mysource')
   
@@ -278,7 +280,7 @@ output$plotlybar <- renderPlotly({
         #ggtitle(myclass) + 
         theme_minimal() + 
         theme(text=element_text(size=16)) +
-        tidyExt::no_legend()  +
+        theme(legend.position = "none") +
         #expand_limits(y = 0) 
         ylim(0, max(mpg$cty)) 
       

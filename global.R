@@ -15,9 +15,9 @@ library(plotly)
 library(gt)
 
 
-if(!require(tidyExt)){
-  devtools::install_github('bansell/tidyExt'); 
-library(tidyExt)}
+#if(!require(tidyExt)){
+#  devtools::install_github('bansell/tidyExt'); 
+#library(tidyExt)}
 
 theme_set(theme_minimal())
 fix_tidyverse_conflicts()
@@ -36,6 +36,10 @@ source('bslib_custom_themes.R')
 # read pwd hash -----------------------------------------------------------
 
 user_base_hash <- read_rds('pswd/pwd_hash_tbl.Rds')
+
+
+# load other big files  ---------------------------------------------------
+
 
 
 

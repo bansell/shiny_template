@@ -6,13 +6,13 @@ install.packages('shiny')
 install.packages('shinyauthr')
 install.packages('sodium')
 install.packages('shinycssloaders') 
-install.packages('devtools')
 install.packages('plotly')
 install.packages('gt')
 
 
 # optional ------------------------------------------------------------------
 
+install.packages('devtools')
 devtools::install_github('bansell/tidyExt')
 
 install.packages('janitor')
