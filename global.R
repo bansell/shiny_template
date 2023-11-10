@@ -20,7 +20,8 @@ library(gt)
 #library(tidyExt)}
 
 theme_set(theme_minimal())
-fix_tidyverse_conflicts()
+
+#fix_tidyverse_conflicts()
 
 default_grey <- "#595959"
 
