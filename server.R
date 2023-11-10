@@ -94,8 +94,9 @@ server <- function(input, output, session) {
       tabPanel('About',
                br(),
                br(),
-               h5(style = "font-size:14px;", 'Welcome!'),br(),
-              h5('This app is a template containing working examples of features & functionality required in many data/dashboard applications.')
+              h5(style = "font-size:16px;", 'Welcome!'), br(),
+              h5(style = "font-size:14px;", 
+                 'This app is a template containing working examples of features & functionality required in many data/dashboard applications, including:')
                ,br()
                ,tags$div(tags$ul(tags$li('hashed user password authentication (shinyauthr)')))
                ,tags$div(tags$ul(tags$li('css themes (bslib)')))
@@ -103,10 +104,12 @@ server <- function(input, output, session) {
                ,tags$div(tags$ul(tags$li('interactive tables (gt)')))
                ,tags$div(tags$ul(tags$li('user input radio buttons/text select')))
                ,tags$div(tags$ul(tags$li('loading wheels (shinycssloaders)')))
+               ,tags$div(tags$ul(tags$li('conditional sidebars')))
                ,tags$div(tags$ul(tags$li('linked reactive multi-plot panels (subplot)')))
                ,tags$div(tags$ul(tags$li('linked reactive multi-plot panels (plotly ~ ggplot2)')))
               ,br()
-              ,h5('Code available at ', a('github', href="https://www.github.com/bansell/shiny_template"))
+              ,h5(style = "font-size:14px;", 
+                  'Code available at ', a('github', href="https://www.github.com/bansell/shiny_template"))
       ),
                
       
