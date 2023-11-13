@@ -140,6 +140,7 @@ server <- function(input, output, session) {
                  'This app is a template containing working examples of features & functionality required in many data/dashboard applications, including:')
                ,br()
                ,tags$div(tags$ul(tags$li('hashed user password authentication (shinyauthr)')))
+              ,tags$div(tags$ul(tags$li('session time logs')))
                ,tags$div(tags$ul(tags$li('css themes (bslib)')))
                ,tags$div(tags$ul(tags$li('title bar logo/image')))
                ,tags$div(tags$ul(tags$li('interactive tables (gt)')))
