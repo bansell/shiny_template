@@ -23,6 +23,47 @@ server <- function(input, output, session) {
     active = reactive(credentials()$user_auth)
   )
   
+# session duration log ----------------------------------------------------
+  
+  # record start time
+  start_time <- as.character(Sys.time())
+  
+  #write tsv when session ends (shiny tab closed by user)
+  session$onSessionEnded(function() {
+    
+    end_time = as.character(Sys.time())
+    
+    session_tbl <- tibble(start_time, end_time) %>%
+      mutate(event='tab_close', session=session$token )
+    
+    if( length(list.files('session_logs/', pattern='sessions.tsv')) == 0){
+      write_tsv(session_tbl,
+                file = "session_logs/sessions.tsv")
+    }else{
+      write_tsv(session_tbl,
+                file = "session_logs/sessions.tsv",
+                append = TRUE)
+    }})
+  
+  #write tsv when session ends (logout button clicked by user)
+  observeEvent(logout_init(), {
+    
+    end_time = as.character(Sys.time())
+    
+    session_tbl <- tibble(start_time, end_time) %>%
+      mutate(event='log_out', session=session$token )
+    
+    if( length(list.files('session_logs/', pattern='sessions.tsv')) == 0){
+      write_tsv(session_tbl,
+                file = "session_logs/sessions.tsv")
+    }else{
+      write_tsv(session_tbl,
+                file = "session_logs/sessions.tsv",
+                append = TRUE)
+    }})
+  
+  
+  
   
 # UI sidePanel code --------------------------------------------
   

@@ -6,6 +6,9 @@
 .RData
 .RDataTmp
 
+#Session info
+sessions.tsv
+
 # User-specific files
 .Ruserdata
 
@@ -15,6 +18,8 @@ tst.R
 
 # User folders
 #pswd_local/
+
+
 
 # Example code in package build process
 *-Ex.R
