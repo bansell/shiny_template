@@ -25,6 +25,8 @@ server <- function(input, output, session) {
   
 # session duration log ----------------------------------------------------
   
+  #NB this chunk cannot be sourced from a separate R script it seems.
+  
   # record start time
   start_time <- as.character(Sys.time())
   
@@ -287,6 +289,13 @@ server <- function(input, output, session) {
 ## plotly  -----------------------------------------------------------------
 
   
+#recode mpg  
+mpg <- mpg %>% mutate(class=factor(class), year=factor(year))
+
+#create colours from factors (for linked ggplot)
+values <- c(hue_pal()(length(levels(mpg$class))))
+names(values) <- levels(mpg$class)
+    
 output$plotlybar <- renderPlotly({
   
   pltly_plt <- mpg %>% 
@@ -339,13 +348,15 @@ output$plotlybar <- renderPlotly({
     p2 <- reactive(
       
       mpg %>%  filter(class==myclass) %>% 
-        ggplot(aes(x=class,y=cty), colour=default_grey) + 
+        ggplot(aes(x=year, y=cty, col=class)) + # colour=default_grey) + 
         geom_boxplot() +
         geom_jitter(width=0.2) + 
         #ggtitle(myclass) + 
         theme_minimal() + 
         theme(text=element_text(size=16)) +
         theme(legend.position = "none") +
+        #preserve colour scheme in subset
+        scale_colour_manual(values=values) +
         #expand_limits(y = 0) 
         ylim(0, max(mpg$cty)) 
       
